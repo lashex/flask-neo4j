@@ -1,7 +1,8 @@
 Flask-Neo4j
 ===========
 
-Flask extension that provides integration with the Neo4j graph database.
+Flask extension that provides integration with the Neo4j graph database using
+the py2neo library.
 
 Links
 `````
