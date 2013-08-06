@@ -18,15 +18,15 @@ class Neo4j(object):
     of providing the application on instantiation: ::
 
         app = Flask(__name__)
-        gdb = Neo4j(app)
+        n4j = Neo4j(app)
 
     ...and an example calling the :meth:`init_app` method: ::
 
-        gdb = Neo4j()
+        n4j = Neo4j()
 
         def init_app():
             app = Flask(__name__)
-            gdb.init_app(app)
+            n4j.init_app(app)
             return app
     """
     def __init__(self, app=None):
