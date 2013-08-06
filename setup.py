@@ -19,7 +19,7 @@ setup(
     url='https://github.com/lashex/flask-neo4j',
     license='Apache License, Version 2.0',
     author='Brett Francis',
-    author_email='brett@',
+    author_email='brett_francis@me.com',
     description='Flask extension providing integration with Neo4j.',
     long_description=__doc__,
     py_modules=['flask_neo4j'],
@@ -27,8 +27,8 @@ setup(
     include_package_data=True,
     platforms='any',
     install_requires=[
-        'Flask',
-        'py2neo'
+        'Flask >= 0.9',
+        'py2neo >= 1.5'
     ],
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
