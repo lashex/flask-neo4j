@@ -10,8 +10,8 @@ except ImportError:
     from flask import _request_ctx_stack as stack
 
 class Neo4j(object):
-    """Automatically connects to Neo4j using parameters defined in Flask
-    configuration.
+    """Automatically connects to Neo4j graph database using parameters defined
+    in Flask configuration.
 
     You can use this extension by providing the Flask app on instantiation or
     by calling the :meth:`init_app` method on an instance object of `Neo4j`. An example

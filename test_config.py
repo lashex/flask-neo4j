@@ -1,7 +1,6 @@
 import flask
 import flask.ext.neo4j
 import unittest
-from py2neo import neo4j
 
 
 class FlaskRequestTest(unittest.TestCase):
@@ -15,8 +14,8 @@ class FlaskRequestTest(unittest.TestCase):
 
 
 class FlaskNeo4jConfigTestCase(FlaskRequestTest):
-    def test_something(self):
-        self.app.config['GRAPH_DATABASE'] = neo4j.DEFAULT_URI
+    def test_graph_db_config(self):
+        self.app.config['GRAPH_DATABASE'] = 'http://localhost:7474/db/data/'
         n4j = flask.ext.neo4j.Neo4j(self.app)
         assert n4j.gdb.neo4j_version is not None
 
