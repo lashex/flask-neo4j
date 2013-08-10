@@ -19,6 +19,11 @@ class FlaskNeo4jConfigTestCase(FlaskRequestTest):
         n4j = flask.ext.neo4j.Neo4j(self.app)
         assert n4j.gdb.neo4j_version is not None
 
+def suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(FlaskRequestTest))
+    suite.addTest(unittest.makeSuite(FlaskNeo4jConfigTestCase))
+    return suite
 
 if __name__ == '__main__':
     unittest.main()
