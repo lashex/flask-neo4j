@@ -38,6 +38,7 @@ Thumbs.db
 venv
 uploads
 upload
+_build
 
 # BDist Artifacts #
 ###################
