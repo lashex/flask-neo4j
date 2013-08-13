@@ -13,14 +13,14 @@ class Neo4j(object):
     """Automatically connects to Neo4j graph database using parameters defined
     in Flask configuration.
 
-    You can use this extension by providing the Flask app on instantiation or
+    One can use this extension by providing the Flask app on instantiation or
     by calling the :meth:`init_app` method on an instance object of `Neo4j`. An example
     of providing the application on instantiation: ::
 
         app = Flask(__name__)
         n4j = Neo4j(app)
 
-    ...and an example calling the :meth:`init_app` method: ::
+    ...and an example calling the :meth:`init_app` method instead: ::
 
         n4j = Neo4j()
 
@@ -28,11 +28,29 @@ class Neo4j(object):
             app = Flask(__name__)
             n4j.init_app(app)
             return app
+
+    One can also providing a dict of indexes that will be used to automatically
+    get or create indexes in the graph database ::
+        app = Flask(__name__)
+        graph_indexes = {'Species': neo4j.Node}
+        n4j = Neo4j(app, graph_indexes)
+        graph_db = n4j.gdb
+        print graph_db.neo4j_version
+        species_index = n4j.index['Species']
+        ...
+
     """
-    def __init__(self, app=None):
+    def __init__(self, app=None, indexes=None):
         self.app = app
         if app is not None:
             self.init_app(app)
+        # add all the indexes as app attributes
+        self.index = {}
+        if indexes is not None:
+            for i, i_type in indexes.iteritems():
+                graph_index = self.gdb.get_or_create_index(i_type, i)
+                self.index[i] = graph_index
+                graph_index = None
 
     def init_app(self, app):
         """Initialize the `app` for use with this :class:`~Neo4j`. This is
@@ -56,7 +74,7 @@ class Neo4j(object):
         gdb = neo4j.GraphDatabaseService.get_instance(
             current_app.config['GRAPH_DATABASE']
         )
-        print(gdb.neo4j_version)
+        print 'Connected to:', gdb.neo4j_version
         return gdb
 
     def teardown(self, exception):
