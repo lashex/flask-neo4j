@@ -5,17 +5,13 @@ Flask-Neo4j
 Flask extension that provides integration with the Neo4j graph database using
 the py2neo library. Under initial development.
 
-Links
-`````
-
-* `documentation <http://blah/Flask-Neo4j>`_
 """
 from setuptools import setup
 
 
 setup(
     name='Flask-Neo4j',
-    version='0.1.0',
+    version='0.1.1',
     url='https://github.com/lashex/flask-neo4j',
     license='MIT',
     author='Brett Francis',
@@ -25,7 +21,6 @@ setup(
     py_modules=['flask_neo4j'],
     zip_safe=False,
     include_package_data=True,
-    platforms='any',
     install_requires=[
         'Flask >= 0.9',
         'py2neo >= 1.5'
