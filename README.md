@@ -23,22 +23,22 @@ Typical usage looks like this::
     app = Flask(__name__)
     graph_indexes = {'Species': neo4j.Node}
     n4j = Neo4j(app, graph_indexes)
-    graph_db = n4j.gdb
-    print graph_db.neo4j_version
+    print n4j.gdb.neo4j_version
     species_index = n4j.index['Species']
     species, = species_index.get_or_create('species_id', 1234,
             {   'full_name': 'Dracula nosferatu',
                 'species_name': 'nosferatu',
                 'type': 'species'
-    })
+            }
+    )
 
-    ref_node = graph_db.get_reference_node()
+    ref_node = n4j.gdb.get_reference_node()
     full_path = ref_node.get_or_create_path(
             'ROOT', species,
             'MEMBER_OF', { 'name': 'Dracula', 'type': 'genus' },
     )
 
-    # which all results in graph that looks like:
+    # which all results in a graph that looks like:
     #  (ref_node)-[:ROOT]->(species)-[:MEMBER_OF]->(genus)
 
 Links
