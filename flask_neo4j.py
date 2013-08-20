@@ -42,15 +42,11 @@ class Neo4j(object):
     """
     def __init__(self, app=None, indexes=None):
         self.app = app
+        self.index = {}
+        self._indexes = indexes
         if app is not None:
             self.init_app(app)
-        # add all the indexes as app attributes
-        self.index = {}
-        if indexes is not None:
-            for i, i_type in indexes.iteritems():
-                graph_index = self.gdb.get_or_create_index(i_type, i)
-                self.index[i] = graph_index
-                graph_index = None
+            print "flask.ext.Neo4j init_app called"
 
     def init_app(self, app):
         """Initialize the `app` for use with this :class:`~Neo4j`. This is
@@ -71,11 +67,11 @@ class Neo4j(object):
             app.teardown_request(self.teardown)
 
     def connect(self):
-        gdb = neo4j.GraphDatabaseService.get_instance(
+        _gdb = neo4j.GraphDatabaseService.get_instance(
             current_app.config['GRAPH_DATABASE']
         )
-        print 'Connected to:', gdb.neo4j_version
-        return gdb
+        print 'Connected to:', _gdb.neo4j_version
+        return _gdb
 
     def teardown(self, exception):
         ctx = stack.top
@@ -89,4 +85,13 @@ class Neo4j(object):
         if ctx is not None:
             if not hasattr(ctx, 'graph_db'):
                 ctx.graph_db = self.connect()
-            return ctx.graph_db
+            print 'past context setting...'
+            # add all the indexes as app attributes
+            if self._indexes is not None:
+                for i, i_type in self._indexes.iteritems():
+                    print 'getting or creating graph index:', i
+                    graph_index = ctx.graph_db.get_or_create_index(i_type, i)
+                    self.index[i] = graph_index
+                    graph_index = None
+
+        return ctx.graph_db
