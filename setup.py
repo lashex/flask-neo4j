@@ -11,7 +11,7 @@ from setuptools import setup
 
 setup(
     name='Flask-Neo4j',
-    version='0.1.3',
+    version='0.1.4',
     url='https://github.com/lashex/flask-neo4j',
     license='MIT',
     author='Brett Francis',

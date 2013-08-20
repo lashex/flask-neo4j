@@ -88,7 +88,7 @@ class Neo4j(object):
         :return: the graph database service property
         """
         self.graph_db = neo4j.GraphDatabaseService.get_instance(
-            current_app.config['GRAPH_DATABASE']
+            self.app.config['GRAPH_DATABASE']
         )
         print 'Connected to:', self.graph_db.neo4j_version
 
