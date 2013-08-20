@@ -34,15 +34,13 @@ class Neo4j(object):
         app = Flask(__name__)
         graph_indexes = {'Species': neo4j.Node}
         n4j = Neo4j(app, graph_indexes)
-        graph_db = n4j.gdb
-        print graph_db.neo4j_version
+        print n4j.gdb.neo4j_version
         species_index = n4j.index['Species']
         ...
 
     """
     def __init__(self, app=None, indexes=None):
         self.app = app
-        self.index = {}
         self._indexes = indexes
         if app is not None:
             self.init_app(app)
@@ -52,26 +50,26 @@ class Neo4j(object):
         """Initialize the `app` for use with this :class:`~Neo4j`. This is
         called automatically if `app` is passed to :meth:`~Neo4j.__init__`.
 
-        The app is configured according to the configuration variables
+        The app is configured according to the configuration variable
         ``GRAPH_DATABASE``
 
         :param flask.Flask app: the application configured for use with
            this :class:`~Neo4j`
         """
+        self.app = app
+        app.n4j = self
+        if not hasattr(app, 'extensions'):
+            app.extensions = {}
+        app.extensions['neo4j'] = self
+
         app.config.setdefault('GRAPH_DATABASE', neo4j.DEFAULT_URI)
+
         # Use the newstyle teardown_appcontext if it's available,
         # otherwise fall back to the request context
         if hasattr(app, 'teardown_appcontext'):
             app.teardown_appcontext(self.teardown)
         else:
             app.teardown_request(self.teardown)
-
-    def connect(self):
-        _gdb = neo4j.GraphDatabaseService.get_instance(
-            current_app.config['GRAPH_DATABASE']
-        )
-        print 'Connected to:', _gdb.neo4j_version
-        return _gdb
 
     def teardown(self, exception):
         ctx = stack.top
@@ -81,17 +79,50 @@ class Neo4j(object):
 
     @property
     def gdb(self):
-        ctx = stack.top
-        if ctx is not None:
-            if not hasattr(ctx, 'graph_db'):
-                ctx.graph_db = self.connect()
-            print 'past context setting...'
+        """Initialize the graph database service instance for use as a property.
+
+        The instance with which to connect is configured according to the
+        configuration variable
+        ``GRAPH_DATABASE``
+
+        :return: the graph database service property
+        """
+        self.graph_db = neo4j.GraphDatabaseService.get_instance(
+            current_app.config['GRAPH_DATABASE']
+        )
+        print 'Connected to:', self.graph_db.neo4j_version
+
+        if not hasattr(self, 'index'):
+            self.index = {}
             # add all the indexes as app attributes
             if self._indexes is not None:
                 for i, i_type in self._indexes.iteritems():
                     print 'getting or creating graph index:', i
-                    graph_index = ctx.graph_db.get_or_create_index(i_type, i)
-                    self.index[i] = graph_index
-                    graph_index = None
+                    self.index[i] = \
+                        self.graph_db.get_or_create_index(i_type, i)
 
-        return ctx.graph_db
+        return self.graph_db
+
+    # def _connect(self):
+    #     _gdb = neo4j.GraphDatabaseService.get_instance(
+    #         current_app.config['GRAPH_DATABASE']
+    #     )
+    #     print 'Connected to:', _gdb.neo4j_version
+    #     return _gdb
+    #
+    # @property
+    # def gdb(self):
+    #     ctx = stack.top
+    #     if ctx is not None:
+    #         if not hasattr(ctx, 'graph_db'):
+    #             ctx.graph_db = self._connect()
+    #         print 'past context setting...'
+    #         # add all the indexes as app attributes
+    #         if self._indexes is not None:
+    #             for i, i_type in self._indexes.iteritems():
+    #                 print 'getting or creating graph index:', i
+    #                 graph_index = ctx.graph_db.get_or_create_index(i_type, i)
+    #                 self.index[i] = graph_index
+    #                 graph_index = None
+    #
+    #     return ctx.graph_db
