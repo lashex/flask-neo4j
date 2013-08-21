@@ -2,7 +2,7 @@ Flask-Neo4j
 ===========
 
 Flask extension that provides integration with the Neo4j graph database using
-the py2neo library. Under initial development.
+the py2neo library.
 
 Installation
 ------------
@@ -14,8 +14,7 @@ Usage
 -------
 Typical usage looks like this::
 
-    #!/usr/bin/env python
-
+````python
     from flask import Flask
     from flask.ext.neo4j import Neo4j
     from py2neo import neo4j
@@ -40,8 +39,9 @@ Typical usage looks like this::
 
     # which all results in a graph that looks like:
     #  (ref_node)-[:ROOT]->(species)-[:MEMBER_OF]->(genus)
+````
 
 Links
-`````
+-----
 
 * `documentation <http://blah/Flask-Neo4j>`_
