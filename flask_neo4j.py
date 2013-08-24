@@ -72,7 +72,7 @@ class Neo4j(object):
             app.teardown_request(self.teardown)
 
     def teardown(self, exception):
-        ctx = stack.top
+        ctx = stack.top # TODO clean up teardown related to graph_db behavior
         if hasattr(ctx, 'graph_db'):
             # py2neo does not have an 'open' connection that needs closing
             ctx.graph_db = None
@@ -102,27 +102,3 @@ class Neo4j(object):
                         self.graph_db.get_or_create_index(i_type, i)
 
         return self.graph_db
-
-    # def _connect(self):
-    #     _gdb = neo4j.GraphDatabaseService.get_instance(
-    #         current_app.config['GRAPH_DATABASE']
-    #     )
-    #     print 'Connected to:', _gdb.neo4j_version
-    #     return _gdb
-    #
-    # @property
-    # def gdb(self):
-    #     ctx = stack.top
-    #     if ctx is not None:
-    #         if not hasattr(ctx, 'graph_db'):
-    #             ctx.graph_db = self._connect()
-    #         print 'past context setting...'
-    #         # add all the indexes as app attributes
-    #         if self._indexes is not None:
-    #             for i, i_type in self._indexes.iteritems():
-    #                 print 'getting or creating graph index:', i
-    #                 graph_index = ctx.graph_db.get_or_create_index(i_type, i)
-    #                 self.index[i] = graph_index
-    #                 graph_index = None
-    #
-    #     return ctx.graph_db
