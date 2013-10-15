@@ -25,20 +25,18 @@ Typical usage looks like this::
     print n4j.gdb.neo4j_version
     species_index = n4j.index['Species']
     species, = species_index.get_or_create('species_id', 1234,
-            {   'full_name': 'Dracula nosferatu',
-                'species_name': 'nosferatu',
-                'type': 'species'
-            }
+        {   'full_name': 'Dracula nosferatu',
+            'species_name': 'nosferatu',
+            'type': 'species'
+        }
     )
 
-    ref_node = n4j.gdb.get_reference_node()
-    full_path = ref_node.get_or_create_path(
-            'ROOT', species,
-            'MEMBER_OF', { 'name': 'Dracula', 'type': 'genus' },
+    full_path = species.get_or_create_path(
+        'MEMBER_OF', { 'name': 'Dracula', 'type': 'genus' },
     )
 
     # which all results in a graph that looks like:
-    #  (ref_node)-[:ROOT]->(species)-[:MEMBER_OF]->(genus)
+    #  (species)-[:MEMBER_OF]->(genus)
 ````
 
 Links
