@@ -34,7 +34,7 @@ ehthumbs.db
 Thumbs.db
 
 # Extraneous Dirs #
-######################
+###################
 venv
 uploads
 upload
@@ -43,6 +43,10 @@ _build
 # BDist Artifacts #
 ###################
 build
+
+# Test Generated Artifacts #
+############################
+.coverage
 
 # IDE and Editor artifacts #
 *.bbprojectd
