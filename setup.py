@@ -23,7 +23,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'Flask >= 0.9',
-        'py2neo >= 1.5'
+        'py2neo >= 1.6'
     ],
     test_suite='test_flask_neo4j.suite',
     classifiers=[

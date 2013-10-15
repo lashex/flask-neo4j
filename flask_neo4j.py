@@ -62,8 +62,6 @@ class Neo4j(object):
             app.extensions = {}
         app.extensions['neo4j'] = self
 
-        app.config.setdefault('GRAPH_DATABASE', neo4j.DEFAULT_URI)
-
         # Use the newstyle teardown_appcontext if it's available,
         # otherwise fall back to the request context
         if hasattr(app, 'teardown_appcontext'):
@@ -87,18 +85,28 @@ class Neo4j(object):
 
         :return: the graph database service property
         """
-        self.graph_db = neo4j.GraphDatabaseService.get_instance(
-            self.app.config['GRAPH_DATABASE']
+        #self.graph_db = neo4j.GraphDatabaseService.get_instance(
+        self.graph_db = neo4j.GraphDatabaseService(
+            #self.app.config['GRAPH_DATABASE']
         )
-        print 'Connected to:', self.graph_db.neo4j_version
 
         if not hasattr(self, 'index'):
             self.index = {}
             # add all the indexes as app attributes
             if self._indexes is not None:
                 for i, i_type in self._indexes.iteritems():
-                    print 'getting or creating graph index:', i
+                    print 'getting or creating graph index:', i, i_type
                     self.index[i] = \
                         self.graph_db.get_or_create_index(i_type, i)
 
         return self.graph_db
+
+if __name__ == '__main__':
+    from flask import Flask
+    app = Flask(__name__)
+    graph_indexes = {'Species': neo4j.Node}
+    n4j = Neo4j(app, graph_indexes)
+    print n4j.gdb.neo4j_version
+    species_index = n4j.index['Species']
+    print 'species index:', species_index
+    n4j.gdb.delete_index(neo4j.Node, 'Species')

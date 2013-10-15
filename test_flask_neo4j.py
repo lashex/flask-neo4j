@@ -24,13 +24,15 @@ class FlaskNeo4jConfigTestCase(FlaskRequestTest):
 
 
 class FlaskNeo4jIndexTestCase(FlaskRequestTest):
-    def test_index_create(self):
+    def test_index_crud(self):
         self.app.config['GRAPH_DATABASE'] = 'http://localhost:7474/db/data/'
         test_indexes = {'Foo': neo4j.Node, 'BarRel': neo4j.Relationship}
         n4j = flask.ext.neo4j.Neo4j(self.app, test_indexes)
         print 'gdb + index:', n4j.gdb
         assert n4j.index['Foo'] is not None
         assert n4j.index['BarRel'] is not None
+        #n4j.delete_index('Foo')
+        #n4j.delete_index('BarRel')
 
 
 def suite():
