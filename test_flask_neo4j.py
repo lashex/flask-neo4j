@@ -16,7 +16,8 @@ class FlaskRequestTest(unittest.TestCase):
 
 class FlaskNeo4jConfigTestCase(FlaskRequestTest):
     def test_graph_db_config(self):
-        self.app.config['GRAPH_DATABASE'] = 'http://localhost:7474/db/data/'
+        self.app.config['CONNECTION_RETRY'] = True
+        self.app.config['RETRY_INTERVAL'] = 2
         n4j = flask.ext.neo4j.Neo4j(self.app)
         print 'gdb: ', n4j.gdb
         assert n4j.gdb is not None
