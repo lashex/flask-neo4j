@@ -1,5 +1,11 @@
+import time
+import logging
 from py2neo import neo4j
+from py2neo.packages.httpstream.http import SocketError
 from flask import current_app
+
+log = logging.getLogger('flask.neo4j')
+logging.basicConfig()
 
 # Find the stack on which we want to store the GraphDatabaseService instance.
 # Starting with Flask 0.9, the _app_ctx_stack is the correct one,
@@ -50,8 +56,9 @@ class Neo4j(object):
         """Initialize the `app` for use with this :class:`~Neo4j`. This is
         called automatically if `app` is passed to :meth:`~Neo4j.__init__`.
 
-        The app is configured according to the configuration variable
-        ``GRAPH_DATABASE``
+        The app is configured according to these configuration variables
+        ``CONNECTION_RETRY``
+        ``RETRY_INTERVAL``
 
         :param flask.Flask app: the application configured for use with
            this :class:`~Neo4j`
@@ -79,23 +86,40 @@ class Neo4j(object):
     def gdb(self):
         """Initialize the graph database service instance for use as a property.
 
-        The instance with which to connect is configured according to the
-        configuration variable
-        ``GRAPH_DATABASE``
-
         :return: the graph database service property
         """
-        #self.graph_db = neo4j.GraphDatabaseService.get_instance(
-        self.graph_db = neo4j.GraphDatabaseService(
-            #self.app.config['GRAPH_DATABASE']
-        )
+        retry = False
+        if 'CONNECTION_RETRY' in self.app.config:
+            retry = self.app.config['CONNECTION_RETRY']
+        retry_interval = 5
+        if 'RETRY_INTERVAL' in self.app.config:
+            retry_interval = self.app.config['RETRY_INTERVAL']
+        retry_count = 0
+        try:
+            self.graph_db = neo4j.GraphDatabaseService()
+        except SocketError as se:
+            log.error('SocketError: {0}'.format(se.message))
+            if retry:
+                while retry_count < 3:
+                    log.debug('Waiting {0}secs before Connection Retry to GraphDatabaseService'.format(
+                        retry_interval
+                    ))
+                    time.sleep(retry_interval)
+                    #time.sleep(1)
+                    retry_count += 1
+                    try:
+                        self.graph_db = neo4j.GraphDatabaseService()
+                    except SocketError as sse:
+                        log.error('SocketError: {0}'.format(sse.message))
 
         if not hasattr(self, 'index'):
             self.index = {}
             # add all the indexes as app attributes
             if self._indexes is not None:
                 for i, i_type in self._indexes.iteritems():
-                    print 'getting or creating graph index:', i, i_type
+                    log.debug('getting or creating graph index:{0} {1}'.format(
+                        i, i_type
+                    ))
                     self.index[i] = \
                         self.graph_db.get_or_create_index(i_type, i)
 
