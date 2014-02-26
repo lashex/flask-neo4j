@@ -14,8 +14,6 @@ Usage
 -----
 Typical usage looks like this::
 
-.. code:: python
-
     from flask import Flask
     from flask.ext.neo4j import Neo4j
     from py2neo import neo4j
