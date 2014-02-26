@@ -32,8 +32,8 @@ class FlaskNeo4jIndexTestCase(FlaskRequestTest):
         print 'gdb + index:', n4j.gdb
         assert n4j.index['Foo'] is not None
         assert n4j.index['BarRel'] is not None
-        #n4j.delete_index('Foo')
-        #n4j.delete_index('BarRel')
+        n4j.delete_index('Foo')
+        n4j.delete_index('BarRel')
 
 
 def suite():

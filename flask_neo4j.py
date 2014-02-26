@@ -125,6 +125,10 @@ class Neo4j(object):
 
         return self.graph_db
 
+    def delete_index(self, index_name):
+        i_type = self._indexes[index_name]
+        self.graph_db.delete_index(content_type=i_type, index_name=index_name)
+
 if __name__ == '__main__':
     from flask import Flask
     app = Flask(__name__)
