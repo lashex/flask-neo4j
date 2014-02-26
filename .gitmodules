@@ -1,6 +1,0 @@
-[submodule "docs/_themes"]
-	path = docs/_themes
-	url = https://github.com/mitsuhiko/flask-sphinx-themes.git
-[submodule "docs/_templates"]
-	path = docs/_templates
-	url = git@github.com:mitsuhiko/flask-sphinx-themes.git
