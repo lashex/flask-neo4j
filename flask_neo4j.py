@@ -1,6 +1,6 @@
 import time
 import logging
-from py2neo import neo4j
+from py2neo import neo4j, ogm
 from py2neo.packages.httpstream.http import SocketError
 from flask import current_app
 
@@ -84,9 +84,13 @@ class Neo4j(object):
 
     @property
     def gdb(self):
-        """Initialize the graph database service instance for use as a property.
+        """The graph database service instance as a property, for convenience.
 
-        :return: the graph database service property
+        Note: The property will use these configuration variables
+        ``CONNECTION_RETRY``
+        ``RETRY_INTERVAL``
+
+        :return: the graph database service as a property
         """
         retry = False
         if 'CONNECTION_RETRY' in self.app.config:
@@ -125,7 +129,28 @@ class Neo4j(object):
 
         return self.graph_db
 
+    @property
+    def store(self):
+        """
+        The object graph mapping store available as a property.
+
+        Note: The property will use these configuration variables
+        ``CONNECTION_RETRY``
+        ``RETRY_INTERVAL``
+
+        :return: the object graph mapping store property
+        """
+        store = ogm.Store(self.gdb)
+        return store
+
     def delete_index(self, index_name):
+        """
+        Simple delete index capability that takes only a name.
+        Note: uses the index_types as remembered from indexes variable given at
+        initialization.
+
+        :param index_name: the name of the index to delete from the database
+        """
         i_type = self._indexes[index_name]
         self.graph_db.delete_index(content_type=i_type, index_name=index_name)
 
