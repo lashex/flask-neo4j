@@ -11,10 +11,11 @@ Using pip::
       pip install flask-neo4j
 
 Usage
--------
+-----
 Typical usage looks like this::
 
-````python
+.. code:: python
+
     from flask import Flask
     from flask.ext.neo4j import Neo4j
     from py2neo import neo4j
@@ -37,7 +38,6 @@ Typical usage looks like this::
 
     # which all results in a graph that looks like:
     #  (species)-[:MEMBER_OF]->(genus)
-````
 
 Links
 -----
