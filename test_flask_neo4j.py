@@ -28,20 +28,18 @@ class FlaskNeo4jIndexTestCase(FlaskRequestTest):
     def test_index_crud(self):
         self.app.config['GRAPH_DATABASE'] = 'http://localhost:7474/db/data/'
         test_indexes = {'Foo': neo4j.Node, 'BarRel': neo4j.Relationship}
-        n4j = flask.ext.neo4j.Neo4j(self.app, test_indexes)
+        n4j = flask.ext.neo4j.Neo4j(self.app, indexes=test_indexes)
         print 'gdb + index:', n4j.gdb
         assert n4j.index['Foo'] is not None
         assert n4j.index['BarRel'] is not None
         n4j.delete_index('Foo')
         n4j.delete_index('BarRel')
 
+class FlaskNeo4jOGMTestCase(FlaskRequestTest):
+    def test_ogm_crud(self):
+        self.app.config['GRAPH_DATABASE'] = 'http://localhost:7474/db/data/'
+        n4j = flask.ext.neo4j.Neo4j(self.app)
 
-def suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(FlaskRequestTest))
-    suite.addTest(unittest.makeSuite(FlaskNeo4jConfigTestCase))
-    suite.addTest(unittest.makeSuite(FlaskNeo4jIndexTestCase))
-    return suite
 
 if __name__ == '__main__':
     unittest.main()
