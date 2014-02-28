@@ -2,7 +2,6 @@ import time
 import logging
 from py2neo import neo4j, ogm
 from py2neo.packages.httpstream.http import SocketError
-from flask import current_app
 
 log = logging.getLogger('flask.neo4j')
 logging.basicConfig()
