@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import time
 import logging
 from py2neo import neo4j, ogm
@@ -49,7 +51,7 @@ class Neo4j(object):
         self._indexes = indexes
         if app is not None:
             self.init_app(app)
-            print "flask.ext.Neo4j init_app called"
+            print ("flask.ext.Neo4j init_app called")
 
     def init_app(self, app):
         """Initialize the `app` for use with this :class:`~Neo4j`. This is
@@ -157,8 +159,8 @@ if __name__ == '__main__':
     from flask import Flask
     app = Flask(__name__)
     graph_indexes = {'Species': neo4j.Node}
-    n4j = Neo4j(app, graph_indexes)
-    print n4j.gdb.neo4j_version
-    species_index = n4j.index['Species']
-    print 'species index:', species_index
-    n4j.gdb.delete_index(neo4j.Node, 'Species')
+    flask4j = Neo4j(app, graph_indexes)
+    print (flask4j.gdb.neo4j_version)
+    species_index = flask4j.index['Species']
+    print ('species index:', species_index)
+    flask4j.gdb.delete_index(neo4j.Node, 'Species')
