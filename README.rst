@@ -42,4 +42,4 @@ Typical usage looks like this::
 Links
 -----
 
-* `documentation <http://blah/Flask-Neo4j>`
+* `documentation <http://blah/Flask-Neo4j>`_
