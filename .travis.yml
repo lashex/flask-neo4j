@@ -6,7 +6,6 @@ python:
 # command to install dependencies
 install: "pip install -r requirements.txt"
 
-script: "bundle exec rake neo4j:install['enterprise','2.0.1'] neo4j:get_spatial neo4j:start spec --trace"
-
-# command to run tests
-script: nosetests
+script: 
+  - "bundle exec rake neo4j:install['enterprise','2.0.1'] neo4j:get_spatial neo4j:start spec --trace"
+  - "nosetests"
