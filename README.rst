@@ -1,10 +1,8 @@
 Flask-Neo4j
 ===========
-.. image:: https://secure.travis-ci.org/lashex/flask-neo4j.png?branch=master
-   :target: http://travis-ci.org/lashex/flask-neo4j
-.. image:: https://pypip.in/d/Flask-Neo4j/badge.png?period=month
-    :target: https://pypi.python.org/pypi/Flask-Neo4j/
-    :alt: Downloads
+.. image:: https://secure.travis-ci.org/drichner/flask-neo4j.png?branch=master
+   :target: http://travis-ci.org/drichner/flask-neo4j
+
 .. image:: https://pypip.in/license/Flask-Neo4j/badge.png
     :target: https://pypi.python.org/pypi/Flask-Neo4j/
     :alt: License
