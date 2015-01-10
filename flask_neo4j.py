@@ -122,7 +122,7 @@ class Neo4j(object):
             self.index = {}
             # add all the indexes as app attributes
             if self._indexes is not None:
-                for i, i_type in self._indexes.iteritems():
+                for i, i_type in iter(self._indexes.items()):
                     log.debug('getting or creating graph index:{0} {1}'.format(
                         i, i_type
                     ))
