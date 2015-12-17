@@ -7,6 +7,18 @@ Flask-Neo4j
     :target: https://pypi.python.org/pypi/Flask-Neo4j/
     :alt: License
 
+.. image:: https://pypip.in/d/Flask-Neo4j/badge.svg
+        :target: https://pypi.python.org/pypi/Flask-Neo4j/
+
+.. image:: https://pypip.in/v/Flask-Neo4j/badge.svg
+        :target: https://pypi.python.org/pypi/Flask-Neo4j/
+
+.. image:: https://pypip.in/egg/Flask-Neo4j/badge.svg
+        :target: https://pypi.python.org/pypi/Flask-Neo4j/
+
+.. image:: https://pypip.in/license/Flask-Neo4j/badge.svg
+        :target: https://pypi.python.org/pypi/Flask-Neo4j/
+
 A Flask extension that provides simple interaction with the Neo4j graph
 database.
 
