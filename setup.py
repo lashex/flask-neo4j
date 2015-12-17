@@ -1,5 +1,5 @@
 """
-Flask-Neo4j
+Flask-Neo4jv2
 -------------
 
 Flask extension that provides integration with the Neo4j graph database using
@@ -11,7 +11,7 @@ from setuptools import setup
 
 setup(
     name='Flask-Neo4j',
-    version='0.3.1',
+    version='0.4.0',
     url='https://github.com/lashex/flask-neo4j',
     license='MIT',
     author='Brett Francis',
@@ -23,7 +23,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'Flask >= 0.10',
-        'py2neo >= 1.6.2'
+        'py2neo >= 2.0.1'
     ],
     test_suite='test_flask_neo4j.suite',
     classifiers=[

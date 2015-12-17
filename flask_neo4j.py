@@ -2,7 +2,8 @@ from __future__ import print_function
 
 import time
 import logging
-from py2neo import neo4j, ogm
+from py2neo import Graph,Node
+from py2neo.ext import ogm
 from py2neo.packages.httpstream.http import SocketError
 
 log = logging.getLogger('flask.neo4j')
@@ -102,7 +103,7 @@ class Neo4j(object):
             retry_interval = self.app.config['RETRY_INTERVAL']
         retry_count = 0
         try:
-            self.graph_db = neo4j.GraphDatabaseService()
+            self.graph_db = Graph(self.app.config['GRAPH_DATABASE'])
         except SocketError as se:
             log.error('SocketError: {0}'.format(se.message))
             if retry:
@@ -114,7 +115,7 @@ class Neo4j(object):
                     #time.sleep(1)
                     retry_count += 1
                     try:
-                        self.graph_db = neo4j.GraphDatabaseService()
+                        self.graph_db = Graph(self.app.config['GRAPH_DATABASE'])
                     except SocketError as sse:
                         log.error('SocketError: {0}'.format(sse.message))
 
@@ -122,12 +123,12 @@ class Neo4j(object):
             self.index = {}
             # add all the indexes as app attributes
             if self._indexes is not None:
-                for i, i_type in self._indexes.iteritems():
+                for i, i_type in iter(self._indexes.items()):
                     log.debug('getting or creating graph index:{0} {1}'.format(
                         i, i_type
                     ))
                     self.index[i] = \
-                        self.graph_db.get_or_create_index(i_type, i)
+                        self.graph_db.legacy.get_or_create_index(i_type, i)
 
         return self.graph_db
 
@@ -154,14 +155,15 @@ class Neo4j(object):
         :param index_name: the name of the index to delete from the database
         """
         i_type = self._indexes[index_name]
-        self.graph_db.delete_index(content_type=i_type, index_name=index_name)
+        self.graph_db.legacy.delete_index(content_type=i_type, index_name=index_name)
 
 if __name__ == '__main__':
     from flask import Flask
     app = Flask(__name__)
-    graph_indexes = {'Species': neo4j.Node}
+    app.config['GRAPH_DATABASE'] = 'http://localhost:7474/db/data/'
+    graph_indexes = {'Species': Node}
     flask4j = Neo4j(app, graph_indexes)
     print (flask4j.gdb.neo4j_version)
     species_index = flask4j.index['Species']
     print ('species index:', species_index)
-    flask4j.gdb.delete_index(neo4j.Node, 'Species')
+    flask4j.delete_index('Species')

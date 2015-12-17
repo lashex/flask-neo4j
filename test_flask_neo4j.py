@@ -18,6 +18,7 @@ class FlaskRequestTest(unittest.TestCase):
 
 class FlaskNeo4jConfigTestCase(FlaskRequestTest):
     def test_graph_db_config(self):
+        self.app.config['GRAPH_DATABASE'] = 'http://localhost:7474/db/data/'
         self.app.config['CONNECTION_RETRY'] = True
         self.app.config['RETRY_INTERVAL'] = 2
         flask4j = flask.ext.neo4j.Neo4j(self.app)
