@@ -7,6 +7,7 @@ Latest 0.4.0
 Upgraded dependency for py2neo to 2.0.1
 Added license attribution
 Code changes to reflect new py2neo API
+Broadened range of DBs tested against
 
 0.3.1
 -----
