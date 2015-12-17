@@ -1,5 +1,11 @@
 Flask-Neo4j
 ===========
+.. :image:: https://img.shields.io/pypi/v/Flask-Neo4j.svg
+   :target: https://pypi.python.org/pypi/Flask-Neo4j
+
+.. image:: https://img.shields.io/pypi/dm/Flask-Neo4j.svg
+   :target: https://pypi.python.org/pypi/Flask-Neo4j
+
 .. image:: https://secure.travis-ci.org/lashex/flask-neo4j.png?branch=master
    :target: http://travis-ci.org/lashex/flask-neo4j
 
