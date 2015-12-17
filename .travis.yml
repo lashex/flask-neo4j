@@ -8,6 +8,7 @@ install: "pip install -r requirements.txt"
 
 env:
     # test across multiple versions of Neo4j:
+    - NEO4J_VERSION="2.0.6"
     - NEO4J_VERSION="2.0.1"
     - NEO4J_VERSION="1.9.6"
 
