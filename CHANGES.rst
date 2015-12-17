@@ -2,12 +2,15 @@ Flask-Neo4j Change Log
 ======================
 The descriptive high-level changes between each Flask-Neo4j release.
 
-Latest 0.4.0
+Latest 0.4.1
 ------------
+Broadened range of DBs tested against
+
+0.4.1
+-----
 Upgraded dependency for py2neo to 2.0.1
 Added license attribution
 Code changes to reflect new py2neo API
-Broadened range of DBs tested against
 
 0.3.1
 -----
