@@ -1,8 +1,9 @@
 from __future__ import print_function
+from builtins import object
 
 import time
 import logging
-from py2neo import Graph,Node
+from py2neo import authenticate, Graph,Node
 from py2neo.ext import ogm
 from py2neo.packages.httpstream.http import SocketError
 
@@ -53,7 +54,7 @@ class Neo4j(object):
         self._indexes = indexes
         if app is not None:
             self.init_app(app)
-            print ("flask.ext.Neo4j init_app called")
+            print("flask.ext.Neo4j init_app called")
 
     def init_app(self, app):
         """Initialize the `app` for use with this :class:`~Neo4j`. This is
@@ -103,7 +104,22 @@ class Neo4j(object):
             retry_interval = self.app.config['RETRY_INTERVAL']
         retry_count = 0
         try:
-            self.graph_db = Graph(self.app.config['GRAPH_DATABASE'])
+            print("flask.ext.Neo4j gdb trying to connect to DB")
+
+            host_port = ''
+            host_database = self.app.config['GRAPH_DATABASE']
+            host_port_idx = host_database.find('://')
+            if host_port_idx >= 0:
+                # extract the host and port from the host_database
+                host_port_idx = host_port_idx + 3
+                host_port = host_database[host_port_idx:]
+                host_port = host_port[:host_port.find('/')]
+
+            authenticate(
+                host_port,
+                self.app.config['GRAPH_USER'], self.app.config['GRAPH_PASSWORD']
+            )
+            self.graph_db = Graph(host_database)
         except SocketError as se:
             log.error('SocketError: {0}'.format(se.message))
             if retry:
@@ -123,7 +139,7 @@ class Neo4j(object):
             self.index = {}
             # add all the indexes as app attributes
             if self._indexes is not None:
-                for i, i_type in iter(self._indexes.items()):
+                for i, i_type in iter(list(self._indexes.items())):
                     log.debug('getting or creating graph index:{0} {1}'.format(
                         i, i_type
                     ))
@@ -160,6 +176,11 @@ class Neo4j(object):
 if __name__ == '__main__':
     from flask import Flask
     app = Flask(__name__)
+    app.config['GRAPH_USER'] = 'neo4j'
+    app.config['GRAPH_PASSWORD'] = 'admin'
+    authenticate(
+        'localhost:7474', app.config['GRAPH_USER'], app.config['GRAPH_PASSWORD']
+    )
     app.config['GRAPH_DATABASE'] = 'http://localhost:7474/db/data/'
     graph_indexes = {'Species': Node}
     flask4j = Neo4j(app, graph_indexes)

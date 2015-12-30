@@ -33,12 +33,15 @@ Icon?
 ehthumbs.db
 Thumbs.db
 
-# Extraneous Dirs #
-###################
+# Extraneous Dirs and Files #
+#############################
 venv
+venv2
+venv3
 uploads
 upload
 _build
+*.bak
 
 # BDist Artifacts #
 ###################
