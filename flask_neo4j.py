@@ -1,5 +1,5 @@
 from __future__ import print_function
-from builtins import object
+from future.builtins import object
 
 import time
 import logging
