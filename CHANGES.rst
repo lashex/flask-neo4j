@@ -2,8 +2,12 @@ Flask-Neo4j Change Log
 ======================
 The descriptive high-level changes between each Flask-Neo4j release.
 
-Latest 0.5.0
+Latest 0.5.1
 ------------
+Fixed setup.py to require `future`
+
+0.5.0
+-----
 Decided to add Python 3 support for the holidays
 Added in Neo4j authentication
 

@@ -46,6 +46,7 @@ _build
 # BDist Artifacts #
 ###################
 build
+dist
 
 # Test Generated Artifacts #
 ############################
