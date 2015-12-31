@@ -9,6 +9,9 @@ Flask-Neo4j
 .. image:: https://secure.travis-ci.org/lashex/flask-neo4j.png?branch=master
    :target: http://travis-ci.org/lashex/flask-neo4j
 
+.. image:: https://img.shields.io/pypi/wheel/Flask-Neo4j.png
+   :target: https://pypi.python.org/pypi/Flask-Neo4j
+
 A Flask extension that provides simple interaction with the Neo4j graph
 database.
 
