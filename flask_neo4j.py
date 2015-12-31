@@ -117,7 +117,8 @@ class Neo4j(object):
 
             authenticate(
                 host_port,
-                self.app.config['GRAPH_USER'], self.app.config['GRAPH_PASSWORD']
+                self.app.config['GRAPH_USER'],
+                self.app.config['GRAPH_PASSWORD']
             )
             self.graph_db = Graph(host_database)
         except SocketError as se:
