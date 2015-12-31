@@ -9,7 +9,7 @@ Flask-Neo4j
 .. image:: https://img.shields.io/pypi/dm/Flask-Neo4j.svg
    :target: https://pypi.python.org/pypi/Flask-Neo4j
 
-.. image:: https://secure.travis-ci.org/lashex/flask-neo4j.png?branch=master
+.. image:: https://secure.travis-ci.org/lashex/flask-neo4j.png
    :target: http://travis-ci.org/lashex/flask-neo4j
 
 .. image:: https://img.shields.io/pypi/wheel/Flask-Neo4j.png
