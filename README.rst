@@ -34,6 +34,8 @@ Typical usage looks like this::
 
     # Configuration
     GRAPH_DATABASE='http://localhost:7474/db/data/'
+    GRAPH_USER = 'neo4j'
+    GRAPH_PASSWORD = 'admin'
 
     app = Flask(__name__)
     app.config.from_object(__name__)
