@@ -18,7 +18,7 @@ Flask-Neo4j
 A Flask extension that provides simple interaction with the Neo4j graph
 database.
 
-The underlying Neo4j capabilities are made possible by the fine `py2neo <http://book.py2neo.org>`_ library.
+The underlying Neo4j capabilities are made possible by the fine `py2neo <http://py2neo.org>`_ library.
 
 
 Installation
