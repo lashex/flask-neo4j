@@ -4,8 +4,13 @@ from future.builtins import object
 import time
 import logging
 from py2neo import authenticate, Graph,Node
-from py2neo.ext import ogm
 from py2neo.packages.httpstream.http import SocketError
+
+# Support for py2neo v3
+try:
+    from py2neo import ogm
+except ImportError:
+    from py2neo.ext import ogm
 
 log = logging.getLogger('flask.neo4j')
 logging.basicConfig()
