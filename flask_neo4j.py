@@ -119,13 +119,18 @@ class Neo4j(object):
                 host_port_idx = host_port_idx + 3
                 host_port = host_database[host_port_idx:]
                 host_port = host_port[:host_port.find('/')]
-
+            print("Host D", host_port)
             authenticate(
                 host_port,
                 self.app.config['GRAPH_USER'],
                 self.app.config['GRAPH_PASSWORD']
             )
-            self.graph_db = Graph(host_database)
+            print("Host ", host_database)
+            # We test for bolt in connection string, so py2neo can have excplicit bolt parameter
+            if host_database.find('bolt') == 0:
+                self.graph_db = Graph(host_database, bolt=True)
+            else:
+                self.graph_db = Graph(host_database)
         except SocketError as se:
             log.error('SocketError: {0}'.format(se.message))
             if retry:
