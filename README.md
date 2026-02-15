@@ -1,7 +1,5 @@
 # Flask-Neo4j
 
-[![PyPI version](https://img.shields.io/pypi/v/Flask-Neo4j.svg)](https://pypi.org/project/Flask-Neo4j/)
-[![Python versions](https://img.shields.io/pypi/pyversions/Flask-Neo4j.svg)](https://pypi.org/project/Flask-Neo4j/)
 [![CI](https://github.com/lashex/flask-neo4j/actions/workflows/ci.yml/badge.svg)](https://github.com/lashex/flask-neo4j/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
