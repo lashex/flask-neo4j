@@ -8,6 +8,7 @@ version = "0.7.0"
 description = "Flask extension providing integration with the Neo4j graph database."
 readme = "README.md"
 license = "MIT"
+keywords = ["flask", "neo4j", "graph-database", "cypher", "bolt", "extension"]
 requires-python = ">=3.9"
 authors = [
     { name = "Brett Francis", email = "1144266+lashex@users.noreply.github.com" },
