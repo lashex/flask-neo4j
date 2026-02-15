@@ -1,0 +1,80 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "Flask-Neo4j"
+version = "0.7.0"
+description = "Flask extension providing integration with the Neo4j graph database."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.9"
+authors = [
+    { name = "Brett Francis", email = "1144266+lashex@users.noreply.github.com" },
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Web Environment",
+    "Framework :: Flask",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Database",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
+]
+dependencies = [
+    "Flask>=2.0",
+    "neo4j>=5.0,<6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "pytest-mock>=3.0",
+    "ruff>=0.4",
+    "mypy>=1.0",
+]
+docs = [
+    "sphinx>=7.0",
+    "myst-parser>=2.0",
+    "furo>=2024.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/lashex/flask-neo4j"
+Documentation = "https://flask-neo4j.readthedocs.io"
+Repository = "https://github.com/lashex/flask-neo4j"
+Changelog = "https://github.com/lashex/flask-neo4j/blob/main/CHANGELOG.md"
+Issues = "https://github.com/lashex/flask-neo4j/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/flask_neo4j"]
+
+[tool.ruff]
+src = ["src"]
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.mypy]
+python_version = "3.9"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "integration: tests requiring a running Neo4j instance",
+]

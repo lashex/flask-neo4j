@@ -1,58 +1,37 @@
-# Compiled source #
-###################
-*.pyc
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+dist/
+build/
+*.whl
 
-# Packages #
-############
-# it's better to unpack these files and commit the raw source
-# git has its own built in compression methods
-*.7z
-*.dmg
-*.gz
-*.iso
-*.jar
-*.rar
-*.tar
-*.zip
+# Virtual environments
+.venv/
+venv/
 
-# Logs and databases #
-######################
-*.log
-*.sql
-*.sqlite
-CHANGELOG
-
-# OS generated files #
-######################
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-Icon?
-ehthumbs.db
-Thumbs.db
-
-# Extraneous Dirs and Files #
-#############################
-venv
-venv2
-venv3
-uploads
-upload
-_build
-*.bak
-
-# BDist Artifacts #
-###################
-build
-dist
-
-# Test Generated Artifacts #
-############################
+# Testing
 .coverage
+.pytest_cache/
+htmlcov/
 
-# IDE and Editor artifacts #
-*.bbprojectd
-.idea
-*.egg-info
+# Type checking
+.mypy_cache/
+
+# Ruff
+.ruff_cache/
+
+# Sphinx docs
+docs/_build/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
