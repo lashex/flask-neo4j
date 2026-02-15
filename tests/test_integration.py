@@ -5,6 +5,8 @@ Run with: pytest -m integration
 
 from __future__ import annotations
 
+import os
+
 import pytest
 from flask import Flask
 
@@ -16,10 +18,13 @@ pytestmark = pytest.mark.integration
 @pytest.fixture()
 def neo4j_app() -> Flask:
     """Flask app configured for a local Neo4j instance."""
+    uri = os.environ.get("NEO4J_URI", "bolt://localhost:7687")
+    auth_str = os.environ.get("NEO4J_AUTH", "neo4j/testpassword")
+    user, password = auth_str.split("/", 1)
     app = Flask(__name__)
     app.config.update(
-        NEO4J_URI="bolt://localhost:7687",
-        NEO4J_AUTH=("neo4j", "neo4j"),
+        NEO4J_URI=uri,
+        NEO4J_AUTH=(user, password),
         NEO4J_DATABASE="neo4j",
     )
     return app
